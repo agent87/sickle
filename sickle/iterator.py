@@ -1,9 +1,11 @@
-from typing import Dict, Any, Optional, Iterator, Type
+from typing import Dict, Any, Optional, Iterator, Type, TYPE_CHECKING
 from sickle import oaiexceptions
 from sickle.models import ResumptionToken
-from sickle.app import Sickle
 from sickle.response import OAIResponse
 from xml.etree.ElementTree import Element
+
+if TYPE_CHECKING:
+    from sickle import Sickle
 
 # Map OAI verbs to the XML elements
 VERBS_ELEMENTS: Dict[str, str] = {

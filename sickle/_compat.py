@@ -29,6 +29,7 @@ def to_unicode(x):  # pragma: no cover
     else:
         return x.decode('utf-8')
 
+
 def to_str(x):  # pragma: no cover
     """Convert unicode argument into a string."""
     if PY3:
