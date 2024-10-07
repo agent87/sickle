@@ -1,8 +1,8 @@
 import os
-from logging import getLogger, Formatter, StreamHandler, FileHandler, INFO
+from logging import getLogger, Formatter, StreamHandler, FileHandler, INFO, Logger
 
 
-def create_logger(name, log_directory="logs"):
+def create_logger(name, log_directory="logs") -> Logger:
     logger = getLogger(name)
     logger.setLevel(INFO)
 
