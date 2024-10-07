@@ -1,11 +1,10 @@
-from typing import Dict, Any, Optional, Iterator, Type, TYPE_CHECKING
+from typing import Dict, Any, Optional, Iterator, Type, TypeVar
 from sickle import oaiexceptions
 from sickle.models import ResumptionToken
 from sickle.response import OAIResponse
 from xml.etree.ElementTree import Element
 
-if TYPE_CHECKING:
-    from sickle import Sickle
+SickleType = TypeVar('SickleType', bound='Sickle')
 
 # Map OAI verbs to the XML elements
 VERBS_ELEMENTS: Dict[str, str] = {
@@ -19,8 +18,8 @@ VERBS_ELEMENTS: Dict[str, str] = {
 
 
 class BaseOAIIterator:
-    def __init__(self, sickle: Sickle, params: Dict[str, Any], ignore_deleted: bool = False) -> None:
-        self.sickle: Sickle = sickle
+    def __init__(self, sickle: SickleType, params: Dict[str, Any], ignore_deleted: bool = False) -> None:
+        self.sickle: SickleType = sickle
         self.params: Dict[str, Any] = params
         self.ignore_deleted: bool = ignore_deleted
         self.verb: Optional[str] = self.params.get('verb')
@@ -90,7 +89,7 @@ class OAIResponseIterator(BaseOAIIterator):
 
 
 class OAIItemIterator(BaseOAIIterator):
-    def __init__(self, sickle: Sickle, params: Dict[str, Any], ignore_deleted: bool = False) -> None:
+    def __init__(self, sickle: SickleType, params: Dict[str, Any], ignore_deleted: bool = False) -> None:
         self.mapper: Type[Any] = sickle.class_mapping[params.get('verb', '')]
         self.element: str = VERBS_ELEMENTS[params.get('verb', '')]
         self._items: Iterator[Element]
